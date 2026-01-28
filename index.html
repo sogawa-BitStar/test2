@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AuShort Detail Sticky Footer Repro</title>
+  <style>
+    :root {
+      --max-width: 375px;
+      --border: #e0e0e0;
+      --bg-gray: #f4f5f7;
+      --bg-white: #ffffff;
+      --accent: #ff8a3d;
+      --accent-2: #ffb76b;
+      --link: #2f6bff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: #f0f0f0;
+    }
+
+    .page {
+      min-height: 100vh;
+      background: var(--bg-white);
+    }
+
+    .main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+    }
+
+    header {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-white);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .hero {
+      margin: 16px;
+      height: 210px;
+      border-radius: 16px;
+      background: #d9d9d9;
+    }
+
+    .section {
+      padding: 0 20px 24px;
+      background: var(--bg-gray);
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 8px 0 16px;
+    }
+
+    .info-card, .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-row:last-child { border-bottom: 0; }
+
+    .info-head {
+      width: 136px;
+      padding: 12px;
+      background: #f1f1f1;
+      font-size: 12px;
+    }
+
+    .info-body {
+      flex: 1;
+      padding: 12px;
+      font-size: 12px;
+    }
+
+    .card {
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .spacer {
+      height: 420px;
+    }
+
+    .fixed-status-wrapper {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      position: sticky;
+      bottom: 0;
+      background: var(--bg-gray);
+      border-top: 1px solid var(--border);
+    }
+
+    .status-inner {
+      display: flex;
+      gap: 8px;
+      padding: 16px;
+      align-items: center;
+    }
+
+    .status-thumb {
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
+      background: #cfcfcf;
+      flex-shrink: 0;
+    }
+
+    .status-content {
+      flex: 1;
+    }
+
+    .cta {
+      width: 100%;
+      height: 58px;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    }
+
+    .sub-link {
+      margin-top: 6px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--link);
+      text-decoration: underline;
+      display: block;
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="main">
+      <header>Creator Circle</header>
+
+      <div class="hero"></div>
+
+      <div class="section">
+        <div class="title">Campaign Detail</div>
+
+        <div class="info-card">
+          <div class="info-row">
+            <div class="info-head">Product</div>
+            <div class="info-body">Sample Product</div>
+          </div>
+          <div class="info-row">
+            <div class="info-head">Company</div>
+            <div class="info-body">Sample Inc.</div>
+          </div>
+          <div class="info-row">
+            <div class="info-head">Deadline</div>
+            <div class="info-body">Mar 1, 12:00</div>
+          </div>
+          <div class="info-row">
+            <div class="info-head">Platform</div>
+            <div class="info-body">TikTok</div>
+          </div>
+        </div>
+
+        <div class="card">
+          This block is just a placeholder for the long campaign description.
+          Add more text here to simulate a longer page if needed.
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="fixed-status-wrapper">
+          <div class="status-inner">
+            <div class="status-thumb"></div>
+            <div class="status-content">
+              <button class="cta">Submit Post</button>
+              <a class="sub-link" href="#">Check submitted posts</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">Sticky footer is bottom: 0 to reproduce the issue.</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
