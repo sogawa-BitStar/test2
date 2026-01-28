@@ -1,20 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AuShort Detail Sticky Footer Repro</title>
+  <title>CreatorCircle Detail Repro (Same Structure)</title>
   <style>
     :root {
       --max-width: 375px;
       --border: #e0e0e0;
-      --bg-gray: #f4f5f7;
-      --bg-white: #ffffff;
-      --accent: #ff8a3d;
-      --accent-2: #ffb76b;
-      --link: #2f6bff;
+      --white: #ffffff;
+      --gray-bg: #f4f5f7;
+      --gray-100: #f1f1f1;
       --text: #1a1a1a;
       --muted: #6b6b6b;
+      --orange-1: #ffb76b;
+      --orange-2: #ff8a3d;
+      --cyan: #1bb3b3;
     }
 
     * { box-sizing: border-box; }
@@ -25,69 +26,163 @@
       background: #f0f0f0;
     }
 
+    /* PageBase */
     .page {
       min-height: 100vh;
-      background: var(--bg-white);
+      background: var(--white);
+      position: relative;
     }
-
+    .wrapper {
+      position: relative;
+      padding: 40px 0;
+    }
     .main {
       max-width: var(--max-width);
       margin: 0 auto;
-      min-height: 100vh;
-      background: var(--bg-white);
       border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow-y: hidden;
+      background: var(--white);
+      min-height: 100vh;
     }
 
-    header {
+    /* DetailPage Page */
+    .detail-page {
+      min-height: 100vh;
+      background-image: linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px),
+                        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: center;
+    }
+
+    /* CreatorCircleHeader */
+    .cc-header {
       height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid var(--border);
-      background: var(--bg-white);
+      background: var(--white);
       font-weight: 700;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.4px;
     }
 
-    .hero {
-      margin: 16px;
-      height: 210px;
+    /* HeaderNavigation */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav .back {
+      width: 20px;
+      height: 20px;
+      background: #d9d9d9;
+      border-radius: 4px;
+    }
+    .nav .title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* UserEntryList */
+    .component {
+      margin-top: 53px;
+    }
+    .caption-area {
+      background: var(--white);
+    }
+    .caption {
+      position: relative;
+      top: -20px;
       border-radius: 16px;
+    }
+    .thumbnail {
+      position: relative;
+      padding-top: calc(210 / 335 * 100%);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
       background: #d9d9d9;
     }
-
-    .section {
-      padding: 0 20px 24px;
-      background: var(--bg-gray);
+    .expired-badge {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      width: 72px;
+      height: 24px;
+      background: #c0c0c0;
+      border-radius: 12px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
 
-    .title {
-      font-size: 16px;
+    .box {
+      display: flex;
+    }
+    .box.column {
+      flex-direction: column;
+    }
+    .box.center {
+      align-items: center;
+    }
+    .box.gap-16 { gap: 16px; }
+    .box.gap-8 { gap: 8px; }
+    .box.gap-6 { gap: 6px; }
+    .box.mt-40 { margin-top: 40px; }
+
+    .title-text {
+      font-size: 14px;
       font-weight: 700;
-      margin: 8px 0 16px;
     }
 
-    .info-card, .card {
-      background: var(--bg-white);
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      background: #ededed;
+      border-radius: 12px;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+
+    .campaign-info {
+      background: var(--gray-bg);
+      padding: 24px 20px 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .contents-card {
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
+      background: var(--white);
       margin-top: 16px;
     }
-
     .info-row {
       display: flex;
       border-bottom: 1px solid var(--border);
     }
-    .info-row:last-child { border-bottom: 0; }
-
+    .info-row:last-child { border-bottom: none; }
     .info-head {
       width: 136px;
       padding: 12px;
-      background: #f1f1f1;
+      background: var(--gray-100);
       font-size: 12px;
+      border-right: 1px solid var(--border);
     }
-
     .info-body {
       flex: 1;
       padding: 12px;
@@ -95,43 +190,59 @@
     }
 
     .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
       padding: 12px;
+      margin-top: 16px;
+      background: var(--white);
       font-size: 12px;
       line-height: 1.6;
     }
 
-    .spacer {
-      height: 420px;
+    .footer-image-area {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+    .footer-image {
+      width: 245px;
+      height: 120px;
+      background: #d9d9d9;
+      border-radius: 8px;
     }
 
+    /* FixedStatusWrapper (same as current) */
     .fixed-status-wrapper {
       width: calc(100% + 40px);
       margin-left: -20px;
+      max-width: 375px;
       position: sticky;
       bottom: 0;
-      background: var(--bg-gray);
-      border-top: 1px solid var(--border);
     }
 
-    .status-inner {
+    /* AuShortStatusAndActionBox */
+    .status-wrapper {
       display: flex;
+      align-items: center;
       gap: 8px;
       padding: 16px;
-      align-items: center;
+      border-top: 1px solid var(--border);
+      background: #fff3e6;
     }
-
-    .status-thumb {
-      width: 84px;
-      height: 84px;
+    .status-image {
+      width: 83.5px;
+      height: 83.5px;
       border-radius: 12px;
       background: #cfcfcf;
       flex-shrink: 0;
     }
-
     .status-content {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
-
     .cta {
       width: 100%;
       height: 58px;
@@ -139,72 +250,116 @@
       border-radius: 8px;
       color: #fff;
       font-weight: 700;
-      background: linear-gradient(180deg, var(--accent-2), var(--accent));
+      background: linear-gradient(180deg, var(--orange-1), var(--orange-2));
     }
-
     .sub-link {
-      margin-top: 6px;
-      text-align: center;
       font-size: 12px;
-      color: var(--link);
+      color: #2f6bff;
       text-decoration: underline;
-      display: block;
     }
 
-    .note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 12px;
+    @media (max-width: 480px) {
+      .wrapper { padding: 0; }
+      .main {
+        border-radius: 0;
+        border: none;
+        max-width: none;
+        overflow-y: visible;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <div class="main">
-      <header>Creator Circle</header>
+    <div class="wrapper">
+      <div class="main">
+        <div class="detail-page">
+          <header class="cc-header">Creator Circle</header>
 
-      <div class="hero"></div>
-
-      <div class="section">
-        <div class="title">Campaign Detail</div>
-
-        <div class="info-card">
-          <div class="info-row">
-            <div class="info-head">Product</div>
-            <div class="info-body">Sample Product</div>
+          <div class="nav">
+            <div class="back"></div>
+            <div class="title">案件詳細</div>
           </div>
-          <div class="info-row">
-            <div class="info-head">Company</div>
-            <div class="info-body">Sample Inc.</div>
-          </div>
-          <div class="info-row">
-            <div class="info-head">Deadline</div>
-            <div class="info-body">Mar 1, 12:00</div>
-          </div>
-          <div class="info-row">
-            <div class="info-head">Platform</div>
-            <div class="info-body">TikTok</div>
-          </div>
-        </div>
 
-        <div class="card">
-          This block is just a placeholder for the long campaign description.
-          Add more text here to simulate a longer page if needed.
-        </div>
+          <div class="component">
+            <div class="caption-area">
+              <div class="caption">
+                <div class="thumbnail">
+                  <div class="expired-badge">締切</div>
+                </div>
+                <div class="box column gap-16" style="padding:16px 16px 12px;">
+                  <div class="title-text">案件タイトル（au Short）</div>
+                  <div class="chip-row">
+                    <div class="chip">#TikTok</div>
+                    <div class="chip">#Short</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="spacer"></div>
+            <div class="campaign-info">
+              <div class="box column center gap-8 mt-40">
+                <div style="width:36px;height:36px;background:#d9d9d9;border-radius:50%;"></div>
+                <div class="section-title">基本情報</div>
+              </div>
 
-        <div class="fixed-status-wrapper">
-          <div class="status-inner">
-            <div class="status-thumb"></div>
-            <div class="status-content">
-              <button class="cta">Submit Post</button>
-              <a class="sub-link" href="#">Check submitted posts</a>
+              <div class="contents-card">
+                <div class="info-row">
+                  <div class="info-head">商品・サービス</div>
+                  <div class="info-body">サンプル商品</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-head">会社名</div>
+                  <div class="info-body">サンプル株式会社</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-head">募集しめきり</div>
+                  <div class="info-body">3月1日 12:00</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-head">投稿の有無</div>
+                  <div class="info-body">あり</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-head">投稿<br />プラットフォーム</div>
+                  <div class="info-body">TikTok</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-head">商品の送付</div>
+                  <div class="info-body">あり</div>
+                </div>
+              </div>
+
+              <div class="box column center gap-8 mt-40">
+                <div style="width:28px;height:28px;background:#d9d9d9;border-radius:50%;"></div>
+                <div class="section-title">施策詳細や条件</div>
+              </div>
+
+              <div class="card">
+                ここに施策詳細テキストが入る想定。
+                テキスト量を増やして長めにしてもOK。
+              </div>
+
+              <div class="footer-image-area">
+                <div class="footer-image"></div>
+              </div>
+
+              <!-- Applied + Accepted + Not expired = AuShortStatusAndActionBox -->
+              <div class="fixed-status-wrapper">
+                <div class="status-wrapper">
+                  <div class="status-image"></div>
+                  <div class="status-content">
+                    <button class="cta">投稿を提出する</button>
+                    <a class="sub-link" href="#">投稿を確認する</a>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 80px;"></div>
             </div>
           </div>
-        </div>
 
-        <div class="note">Sticky footer is bottom: 0 to reproduce the issue.</div>
+        </div>
       </div>
     </div>
   </div>
